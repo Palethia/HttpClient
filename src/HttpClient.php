@@ -15,6 +15,12 @@ class HttpClient
 {
 	public const DEFAULT_USER_AGENT = "Mozilla/5.0 (Linux; Android 14) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/127.0.6533.103 Mobile Safari/537.36";
 
+	public const CURL_DEFAULT_OPTIONS = [
+		CURLOPT_RETURNTRANSFER => true,
+		CURLOPT_USERAGENT => self::DEFAULT_USER_AGENT,
+		CURLOPT_SSL_OPTIONS => CURLSSLOPT_NATIVE_CA
+	];
+
 	private CurlHandle $ch;
 
 	/**
@@ -23,11 +29,7 @@ class HttpClient
 	 * @param array $default_options
 	 */
 	public function __construct(
-		private array $default_options = [
-			CURLOPT_RETURNTRANSFER => true,
-			CURLOPT_USERAGENT => self::DEFAULT_USER_AGENT,
-			CURLOPT_SSL_OPTIONS => CURLSSLOPT_NATIVE_CA
-		]
+		private array $default_options = self::CURL_DEFAULT_OPTIONS
 	) {
 		$this->ch = curl_init();
 	}
